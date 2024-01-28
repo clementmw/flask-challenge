@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Hero(db.Model):
-    __tablename__ = 'hero'
+    __tablename__ = 'Heros'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
