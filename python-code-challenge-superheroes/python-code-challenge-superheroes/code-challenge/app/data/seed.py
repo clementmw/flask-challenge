@@ -56,7 +56,7 @@ with app.app_context():
     for hero_data in heroes_data:
         power_item = HeroPower(
             strength=rc(strengths),
-            hero_id=hero_data.id,  # Access the individual hero object and get its ID
+            hero_id=rc(heroes_data).id,  # Access the individual hero object and get its ID
             power_id=rc(powers_data).id  # Access the individual power object and get its ID
         )
         hero_powers.append(power_item)

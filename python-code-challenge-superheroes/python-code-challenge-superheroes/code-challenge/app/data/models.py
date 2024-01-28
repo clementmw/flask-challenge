@@ -1,9 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.orm import validates
 
 db = SQLAlchemy()
 
-class Hero(db.Model):
+class Hero(db.Model, SerializerMixin):
     __tablename__ = 'heros'
+    serialize_rules= ('-hero_powers.heros',)
+
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -20,15 +24,18 @@ class Hero(db.Model):
         f"created_at: {self.created_at}"
         
 
-class HeroPower(db.Model):
+class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
+    serialize_rules= ('-hero.hero_powers',)
 
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String)
     # to establish connection to heroes
     hero_id = db.Column(db.Integer, db.ForeignKey('heros.id'))
+    
     # to establish connection to power
     power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
+
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -37,8 +44,10 @@ class HeroPower(db.Model):
         f"hero_id: {self.hero_id}"
         
 
-class Power(db.Model):
+class Power(db.Model, SerializerMixin):
     __tablename__ = 'powers'
+    serialize_rules= ('-hero_powers.power',)
+
 
     id = db.Column(db.Integer, primary_key = True)
     name  = db.Column(db.String)
