@@ -49,11 +49,12 @@ class HeroesByID(Resource):
 
 api.add_resource(HeroesByID, '/heroes/<int:id>')
 
-class Power(Resource):
-    def get(self):
-        get_power =[ n.to_dict() for n in Power.query.all()]
-        response  =  make_response(get_power, 200)
-        return response
+# class Power(Resource):
+#      def get(self):
+#         get_power = Power.query.all()
+#         power_dict = [record.to_dict() for record in get_power]
+#         response = make_response(jsonify(power_dict), 200)
+#         return response
         
         
 api.add_resource(Power, '/powers')
