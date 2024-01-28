@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Hero(db.Model):
-    __tablename__ = 'Heros'
+    __tablename__ = 'heros'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -26,7 +26,7 @@ class HeroPower(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String)
     # to establish connection to heroes
-    hero_id = db.Column(db.Integer, db.ForeignKey('Heros.id'))
+    hero_id = db.Column(db.Integer, db.ForeignKey('heros.id'))
     # to establish connection to power
     power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
