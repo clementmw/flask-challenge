@@ -17,6 +17,7 @@ class Hero(db.Model):
     def __repr__(self):
         return f"name: {self.name}"\
         f"super_name: {self.super_name}"\
+        f"created_at: {self.created_at}"
         
 
 class HeroPower(db.Model):
@@ -33,10 +34,10 @@ class HeroPower(db.Model):
 
     def __repr__(self):
         return f"strength: {self.strength}"\
-        f"hero_id: {self.hero_id}"\
+        f"hero_id: {self.hero_id}"
         
 
-class Power(db.model):
+class Power(db.Model):
     __tablename__ = 'powers'
 
     id = db.Column(db.Integer, primary_key = True)
@@ -50,4 +51,4 @@ class Power(db.model):
 
     def __repr__(self):
         return f"name: {self.name}"\
-        f"description: {self.description}"\
+        f"description: {self.description}"
