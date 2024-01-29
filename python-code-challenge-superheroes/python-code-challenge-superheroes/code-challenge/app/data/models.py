@@ -16,7 +16,7 @@ class Hero(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # relationship with HeroPower
-    hero_powers = db.relationship('HeroPower', backref='hero', lazy='dynamic')
+    hero_powers = db.relationship('HeroPower', backref='hero')
 
     def __repr__(self):
         return f"name: {self.name}"\
@@ -56,14 +56,14 @@ class Power(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     # for relationship with HeroPower
-    hero_powers = db.relationship('HeroPower', backref='power', lazy='dynamic')
+    hero_powers = db.relationship('HeroPower', backref='power')
 
-    @validates('description')
-    def  validate_description(self, key, description):   
-        if  description is None and len(description) <20 :
-            raise ValueError ("Description must be atleast 20 characters long")
-        return  description  
+    # @validates('description')
+    # def  validate_description(self, key, description):   
+    #     if  description is None and len(description) <20 :
+    #         raise ValueError ("Description must be atleast 20 characters long")
+    #     return  description  
 
-    def __repr__(self):
-        return f"name: {self.name}"\
-        f"description: {self.description}"
+    # def __repr__(self):
+    #     return f"name: {self.name}"\
+    #     f"description: {self.description}"
