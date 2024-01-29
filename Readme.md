@@ -16,9 +16,6 @@ To set up the project, follow these steps:
 5. Activate the virtual environment: `pipenv shell`.
 
 
-## Dependencies
-List any external libraries or tools that are required for the project to run successfully.
-
 ## Contribution Guidelines
 If you would like to contribute to the project, please follow these guidelines:
 - Fork the repository.
