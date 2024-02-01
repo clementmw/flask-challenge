@@ -35,8 +35,6 @@ class Heroes(Resource):
        hero_dict = [hero.serialize()for hero in get_hero]
        response= make_response(jsonify(hero_dict), 200)
        return response
-
-
 api.add_resource(Heroes, '/heroes')
 
 class HeroesByID(Resource):
