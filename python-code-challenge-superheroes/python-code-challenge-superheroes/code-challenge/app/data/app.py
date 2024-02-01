@@ -29,93 +29,95 @@ def handle_not_found(e):
 def home():
     return "Week 1 code challenge"
 
-# class Heroes(Resource):
-#     def get(self):
-#         response_dict= [n.to_dict() for n in Hero.query.all()]
-#         response= make_response(response_dict, 200)
-#         return  response
+class Heroes(Resource):
+    def get(self):
+       get_hero = Hero.query.all()
+       hero_dict = [hero.serialize()for hero in get_hero]
+       response= make_response(jsonify(hero_dict), 200)
+       return response
 
-# api.add_resource(Heroes, '/heroes')
+
+api.add_resource(Heroes, '/heroes')
 
 class HeroesByID(Resource):
     def get(self,id):
-        record=  Hero.query.filter_by(id=id).first()
+        record=  Hero.query.get(id)
         
-        if record is None:
+        if not record:
             error_dict=  {"error": "Hero not found"}
             response= make_response(jsonify(error_dict), 404 )
+            return response
         else:
-            record_dict= record.to_dict()
+            record_dict= record.serialize()
             response= make_response(jsonify(record_dict), 200)
-        
-        return response
+            return response
         
 api.add_resource(HeroesByID, '/heroes/<int:id>')
 
-class Powers(Resource):
-    def get(self):
-        response_dict= [n.to_dict() for n in Power.query.all()]
+# class Powers(Resource):
+#     def get(self):
+#         response_dict= [n.to_dict() for n in Power.query.all()]
         
-        response= make_response(response_dict, 200)
-        return  response
+#         response= make_response(response_dict, 200)
+#         return  response
 
-api.add_resource(Powers, '/powers')
+# api.add_resource(Powers, '/powers')
 
-class PowersByID(Resource):
-    def get(self,id):
-        record=  Power.query.filter_by(id=id).first()
-        record_dict= record.to_dict() if record else None
+# class PowersByID(Resource):
+#     def get(self,id):
+#         record=  Power.query.filter_by(id=id).first()
+#         record_dict= record.to_dict() if record else None
         
-        if record_dict== None:
-            error_dict=  {'error': 'Power not found'}
-            response= make_response(error_dict, 404)
-            return response
-        else:
-            response= make_response(record_dict, 200)
-            return response
+#         if record_dict== None:
+#             error_dict=  {'error': 'Power not found'}
+#             response= make_response(error_dict, 404)
+#             return response
+#         else:
+#             response= make_response(record_dict, 200)
+#             return response
     
-    def patch(self,id):
-        power = Power.query.filter_by(id=id).first()
-        record_dict= power.to_dict() if power else None
+#     def patch(self,id):
+#         power = Power.query.filter_by(id=id).first()
+#         record_dict= power.to_dict() if power else None
         
-        if record_dict== None:
-            error_dict=  {'error': 'Power not found'}
-            response= make_response(error_dict, 404)
-            return response
-        else:
-            for attr in request.form:
-                setattr(power, attr, request.form[attr])
+#         if record_dict== None:
+#             error_dict=  {'error': 'Power not found'}
+#             response= make_response(error_dict, 404)
+#             return response
+#         else:
+#             for attr in request.form:
+#                 setattr(power, attr, request.form[attr])
             
-            db.session.add(power)
-            try:
-                db.session.commit()
-                power_dict= power.to_dict()
-                response= make_response(power_dict, 200)
-                return response
-            except:
-                err_dict= {"errors" : ["validation errors"]}
-                response= make_response(err_dict, 404)
-                db.session.rollback()
-                return response         
+#             db.session.add(power)
+#             try:
+#                 db.session.commit()
+#                 power_dict= power.to_dict()
+#                 response= make_response(power_dict, 200)
+#                 return response
+#             except:
+#                 err_dict= {"errors" : ["validation errors"]}
+#                 response= make_response(err_dict, 404)
+#                 db.session.rollback()
+#                 return response         
 
-api.add_resource(PowersByID, '/powers/<int:id>')
+# api.add_resource(PowersByID, '/powers/<int:id>')
 
-class HeroPowers(Resource):
-    def post(self):
-        new_record=  HeroPower(
-            strength= request.form['strength'],
-            power_id=  int(request.form['power_id']),
-            hero_id=   int(request.form['hero_id']),
-        )
-        db.session.add(new_record)
-        db.session.commit()
+# class HeroPowers(Resource):
+#     def post(self):
+#         new_record=  HeroPower(
+#             strength= request.form['strength'],
+#             power_id=  int(request.form['power_id']),
+#             hero_id=   int(request.form['hero_id']),
+#         )
+#         db.session.add(new_record)
+#         db.session.commit()
         
-        response_dict= new_record.to_dict()
+#         response_dict= new_record.to_dict()
         
-        response= make_response(jsonify(response_dict), 201)
-        return response
+#         response= make_response(jsonify(response_dict), 201)
+#         return response
     
-api.add_resource(HeroPowers, '/hero_powers')   
+# api.add_resource(HeroPowers, '/hero_powers')   
      
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
