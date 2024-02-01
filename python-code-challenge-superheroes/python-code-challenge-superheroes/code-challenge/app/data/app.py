@@ -115,7 +115,7 @@ class HeroPowers(Resource):
 
        
     
-api.add_resource(HeroPowers, '/heropowers')   
+api.add_resource(HeroPowers, '/hero_powers')   
      
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
