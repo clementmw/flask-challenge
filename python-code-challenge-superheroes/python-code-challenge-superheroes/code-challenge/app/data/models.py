@@ -67,12 +67,13 @@ class Power(db.Model, SerializerMixin):
     # for relationship with HeroPower
     hero_powers = db.relationship('HeroPower', backref='power')
 
-    # @validates('description')
-    # def  validate_description(self, key, description):   
-    #     if  description is None and len(description) <20 :
-    #         raise ValueError ("Description must be atleast 20 characters long")
-    #     return  description  
+    @validates('description')
+    def  validate_description(self, key, powers): 
+        if len(powers) < 20:
+            raise ValueError("Description must be at least 20 characters")
+        return powers  
+        
 
-    # def __repr__(self):
-    #     return f"name: {self.name}"\
-    #     f"description: {self.description}"
+    def __repr__(self):
+        return f"name: {self.name}"\
+        f"description: {self.description}"
